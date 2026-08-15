@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amanda Bakes</title>
-  <!-- Google Fonts -->
+
+  <!-- Google Fonts for Elegant Bakery Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -14,19 +15,30 @@
       --primary-pink: #FFD7D7;
       --accent-pink: #ff8fa3;
       --deep-pink: #d63384;
-      --glass-bg: rgba(255, 255, 255, 0.4);
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --glass-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.65);
+      --glass-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.3);
       --text-color: #4a3e3d;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Poppins', sans-serif; background-color: #fffafb; color: var(--text-color); overflow-x: hidden; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fffafb;
+      color: var(--text-color);
+      overflow-x: hidden;
+      padding-bottom: 50px;
+    }
 
     /* HERO SECTION */
     .hero {
       position: relative;
-      height: 80vh;
+      height: 75vh;
       background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('IMG_4785.jpeg') center/cover no-repeat;
       display: flex;
       flex-direction: column;
@@ -36,83 +48,285 @@
       color: #ffffff;
       padding: 20px;
     }
-    .hero h1 { font-family: 'Great Vibes', cursive; font-size: 5rem; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); }
-    .hero p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; margin-bottom: 25px; }
-    
+
+    .hero h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 5rem;
+      font-weight: 400;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 5px;
+    }
+
+    .hero p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
     .btn-whatsapp {
-      background-color: #25D366; color: white; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 500; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 12px 26px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-    .section-title { text-align: center; font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 50px 0 20px; }
+    .btn-whatsapp:hover {
+      transform: translateY(-3px);
+      background-color: #1ebd59;
+    }
 
-    /* GLASS CARDS & TABLES */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin: 50px 0 20px;
+      color: var(--text-color);
+    }
+
+    /* LIQUID GLASS CAKE TABLE */
     .glass-card {
-      background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border); border-radius: 20px; box-shadow: var(--glass-shadow); padding: 30px; margin-bottom: 40px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: var(--glass-shadow);
+      padding: 25px;
+      margin-bottom: 40px;
     }
-    .cake-table { width: 100%; border-collapse: collapse; }
-    .cake-table th, .cake-table td { padding: 15px; text-align: left; border-bottom: 1px dashed rgba(255, 143, 163, 0.3); }
-    .cake-table th { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--deep-pink); }
-    
-    .btn-add {
-      background-color: var(--accent-pink); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500;
-      transition: background-color 0.3s;
-    }
-    .btn-add:hover { background-color: var(--deep-pink); }
 
-    /* FLOATING BUBBLES */
-    .bubble-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px; }
-    .bubble-card {
-      background: rgba(255, 215, 215, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 30px; padding: 20px; text-align: center;
-      box-shadow: var(--glass-shadow); animation: float 4s ease-in-out infinite;
+    .cake-table {
+      width: 100%;
+      border-collapse: collapse;
     }
+
+    .cake-table th, .cake-table td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px dashed rgba(255, 143, 163, 0.4);
+    }
+
+    .cake-table th {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--deep-pink);
+    }
+
+    .btn-add {
+      background-color: var(--accent-pink);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-add:hover {
+      background-color: var(--deep-pink);
+      transform: translateY(-2px);
+    }
+
+    /* FLOATING TREAT BUCKETS */
+    .bubble-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .bubble-card {
+      background: rgba(255, 215, 215, 0.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 25px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--glass-shadow);
+      animation: float 4s ease-in-out infinite;
+    }
+
     .bubble-card:nth-child(2) { animation-delay: 1.3s; }
     .bubble-card:nth-child(3) { animation-delay: 2.6s; }
-    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
-    .bubble-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
-    .size-select { width: 100%; padding: 8px; border-radius: 10px; border: 1px solid var(--accent-pink); margin-bottom: 12px; background: white; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .bubble-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 12px;
+    }
+
+    .bubble-card h3 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 10px;
+    }
+
+    .size-select {
+      width: 100%;
+      padding: 9px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-pink);
+      margin-bottom: 12px;
+      background: white;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+    }
 
     /* GALLERY GRID */
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 50px; }
-    .gallery-item { background-color: var(--primary-pink); border-radius: 15px; padding: 12px; text-align: center; }
-    .gallery-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
-    .gallery-item .price { font-weight: 600; color: var(--deep-pink); margin-bottom: 8px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
+    }
 
-    /* LIVE ORDER SUMMARY & SLIP CALCULATOR */
+    .gallery-item {
+      background-color: var(--primary-pink);
+      border-radius: 18px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .gallery-item .price {
+      font-weight: 600;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+    }
+
+    /* LIVE BOOKING CALCULATOR & SLIP SUMMARY */
     .order-summary {
-      background: #ffffff; border: 2px solid var(--accent-pink); border-radius: 25px; padding: 25px; margin-bottom: 60px; box-shadow: var(--glass-shadow);
+      background: #ffffff;
+      border: 2px solid var(--accent-pink);
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 30px;
+      box-shadow: var(--glass-shadow);
     }
-    .order-summary h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--deep-pink); margin-bottom: 15px; text-align: center; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
-    .total-box { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 600; margin-top: 20px; padding-top: 15px; border-top: 2px solid var(--deep-pink); }
-    
-    .action-btn {
-      width: 100%; background-color: var(--deep-pink); color: white; border: none; padding: 14px; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 15px;
-    }
-    .action-btn:disabled { background-color: #cccccc; cursor: not-allowed; }
 
-    footer { text-align: center; padding: 20px; background-color: var(--primary-pink); font-size: 0.9rem; }
+    .order-summary h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--deep-pink);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: #d9534f;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .total-box {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 2px solid var(--deep-pink);
+    }
+
+    .action-btn {
+      width: 100%;
+      background-color: var(--deep-pink);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--primary-pink);
+      color: var(--text-color);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 3.5rem; }
+      .hero p { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HERO SECTION -->
+  <!-- HERO HEADER -->
   <header class="hero">
     <h1>Amanda Bakes</h1>
     <p>sweetness in every bite</p>
-    <a href="https://wa.me/27649611004?text=Hi%20Amanda!%20I%20would%20like%20to%20enquire%20about%20your%20bakery%20prices%20and%20availability." class="btn-whatsapp" target="_blank">Enquire via WhatsApp</a>
+    <a href="https://wa.me/27649611004?text=Hi%20Amanda!%20I%20would%20like%20to%20enquire%20about%20your%20bakery%20prices%20and%20availability." class="btn-whatsapp" target="_blank">
+      Enquire via WhatsApp
+    </a>
   </header>
 
   <main class="container">
 
-    <!-- CAKE SIZES TABLE -->
+    <!-- CAKE SIZES & PRICING TABLE -->
     <h2 class="section-title">Cake Sizes & Pricing</h2>
     <div class="glass-card">
       <table class="cake-table">
         <thead>
-          <tr><th>CAKE SIZE</th><th>PRICE</th><th>ACTION</th></tr>
+          <tr>
+            <th>CAKE SIZE</th>
+            <th>PRICE</th>
+            <th>ACTION</th>
+          </tr>
         </thead>
         <tbody>
           <tr><td>4 INCH Cake</td><td>R300</td><td><button class="btn-add" onclick="addToCart('4 INCH Cake', 300)">Add to Order</button></td></tr>
@@ -125,12 +339,12 @@
       </table>
     </div>
 
-    <!-- FLOATING TREAT BUCKET BUBBLES -->
+    <!-- FLOATING TREAT BUCKETS -->
     <h2 class="section-title">Treat Buckets</h2>
     <div class="bubble-grid">
       
       <div class="bubble-card">
-        <img src="IMG_4782.jpeg" alt="Scones">
+        <img src="IMG_4782.jpeg" alt="Scones Bucket">
         <h3>Scones Bucket</h3>
         <select id="scones-size" class="size-select">
           <option value="5L,190">5 LITRE - R190</option>
@@ -141,18 +355,18 @@
       </div>
 
       <div class="bubble-card">
-        <img src="2bdb8a4d-e724-47d6-b0ff-bef9282ada24.jpeg" alt="Muffins & Cupcakes">
+        <img src="2bdb8a4d-e724-47d6-b0ff-bef9282ada24.jpeg" alt="Muffins Bucket">
         <h3>Muffins & Cupcakes</h3>
         <select id="muffins-size" class="size-select">
           <option value="5L,170">5 LITRE - R170</option>
           <option value="10L,260">10 LITRE - R260</option>
           <option value="20L,560">20 LITRE - R560</option>
         </select>
-        <button class="btn-add" onclick="addBucket('Muffins & Cupcakes Bucket', 'muffins-size')">Add to Order</button>
+        <button class="btn-add" onclick="addBucket('Muffins Bucket', 'muffins-size')">Add to Order</button>
       </div>
 
       <div class="bubble-card">
-        <img src="IMG_4780.jpeg" alt="Snowballs">
+        <img src="IMG_4780.jpeg" alt="Snowballs Bucket">
         <h3>Snowballs Bucket</h3>
         <select id="snowballs-size" class="size-select">
           <option value="5L,200">5 LITRE - R200</option>
@@ -165,21 +379,21 @@
     </div>
 
     <!-- GALLERY GRID -->
-    <h2 class="section-title">Custom Gallery Designs</h2>
+    <h2 class="section-title">Custom Designs</h2>
     <div class="gallery-grid">
-      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-41-36.jpeg" alt="Cake"><div class="price">R650</div><button class="btn-add" onclick="addToCart('Custom Blue/Brown Cake', 650)">Add to Order</button></div>
-      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-42-59.jpeg" alt="Cake"><div class="price">R550</div><button class="btn-add" onclick="addToCart('Custom Green Cake', 550)">Add to Order</button></div>
+      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-41-36.jpeg" alt="Cake"><div class="price">R650</div><button class="btn-add" onclick="addToCart('Blue/Brown Custom Cake', 650)">Add to Order</button></div>
+      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-42-59.jpeg" alt="Cake"><div class="price">R550</div><button class="btn-add" onclick="addToCart('Green Custom Cake', 550)">Add to Order</button></div>
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-38-55.jpeg" alt="Cake"><div class="price">R650</div><button class="btn-add" onclick="addToCart('Custom Design 49', 650)">Add to Order</button></div>
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-39-28.jpeg" alt="Cake"><div class="price">R600</div><button class="btn-add" onclick="addToCart('Custom Design 53', 600)">Add to Order</button></div>
       <div class="gallery-item"><img src="IMG_4791.jpeg" alt="Cake"><div class="price">R750</div><button class="btn-add" onclick="addToCart('Custom Design 6', 750)">Add to Order</button></div>
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-40-48.jpeg" alt="Cake"><div class="price">R600</div><button class="btn-add" onclick="addToCart('Custom Design 10', 600)">Add to Order</button></div>
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-36-43.jpeg" alt="Cake"><div class="price">R650</div><button class="btn-add" onclick="addToCart('Custom Design 75', 650)">Add to Order</button></div>
-      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-37-24.jpeg" alt="Cake"><div class="price">R750</div><button class="btn-add" onclick="addToCart('Custom Heart Cake', 750)">Add to Order</button></div>
+      <div class="gallery-item"><img src="PHOTO-2026-08-15-09-37-24.jpeg" alt="Cake"><div class="price">R750</div><button class="btn-add" onclick="addToCart('Heart Custom Cake', 750)">Add to Order</button></div>
     </div>
 
-    <!-- LIVE BOOKING & CALCULATOR SUMMARY -->
+    <!-- LIVE BOOKING & SLIP CALCULATOR -->
     <div class="order-summary" id="booking-calculator">
-      <h3>Booking Summary & Calculator</h3>
+      <h3>Booking Order Calculator</h3>
       <div id="cart-items-container">
         <p style="text-align: center; color: #888;">Your booking list is currently empty. Click 'Add to Order' on any item above.</p>
       </div>
@@ -236,7 +450,7 @@
         html += `
           <div class="cart-item">
             <span>${item.name} - <strong>R${item.price}</strong></span>
-            <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">Remove</button>
+            <button class="btn-remove" onclick="removeFromCart(${index})">Remove</button>
           </div>
         `;
       });
@@ -253,7 +467,7 @@
       let date = new Date().toLocaleDateString();
       let orderNum = Math.floor(100000 + Math.random() * 900000);
 
-      // 1. GENERATE DOWNLOADABLE SLIP (TEXT FILE RECEIPT)
+      // 1. GENERATE DOWNLOADABLE TXT SLIP
       let slipContent = `==================================\n`;
       slipContent += `         AMANDA BAKES          \n`;
       slipContent += `   Sweetness in Every Bite     \n`;
@@ -276,7 +490,7 @@
       link.download = `AmandaBakes_Slip_AB${orderNum}.txt`;
       link.click();
 
-      // 2. FORMAT WHATSAPP MESSAGE & REDIRECT
+      // 2. FORMAT WHATSAPP MESSAGE & OPEN WHATSAPP
       let waMessage = `Hi Amanda! I would like to place a booking order (Slip %23AB-${orderNum}):%0A%0A`;
       cart.forEach(item => {
         waMessage += `%E2%80%A2 ${encodeURIComponent(item.name)}: R${item.price}%0A`;
@@ -289,4 +503,3 @@
 
 </body>
 </html>
-
