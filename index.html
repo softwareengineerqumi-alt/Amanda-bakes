@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amanda Bakes</title>
 
-  <!-- Google Fonts for Elegant Bakery Typography -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -38,7 +38,6 @@
       padding-bottom: 50px;
     }
 
-    /* HERO SECTION */
     .hero {
       position: relative;
       height: 75vh;
@@ -100,7 +99,6 @@
       color: var(--text-color);
     }
 
-    /* LIQUID GLASS CAKE TABLE */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -146,7 +144,6 @@
       transform: translateY(-2px);
     }
 
-    /* FLOATING TREAT BUCKETS */
     .bubble-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -198,7 +195,6 @@
       outline: none;
     }
 
-    /* GALLERY GRID */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -228,7 +224,6 @@
       margin-bottom: 8px;
     }
 
-    /* LIVE BOOKING CALCULATOR & SLIP SUMMARY */
     .order-summary {
       background: #ffffff;
       border: 2px solid var(--accent-pink);
@@ -292,9 +287,13 @@
       cursor: not-allowed;
     }
 
-    /* HIDDEN PDF TEMPLATE */
+    /* OFF-SCREEN TEMPLATE FIX FOR SAFARI/CHROME PDF CAPTURE */
     #pdf-slip-template {
-      display: none;
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      width: 600px;
+      background-color: #fffafb;
     }
 
     footer {
@@ -314,7 +313,6 @@
 </head>
 <body>
 
-  <!-- HERO HEADER -->
   <header class="hero">
     <h1>Amanda Bakes</h1>
     <p>sweetness in every bite</p>
@@ -325,7 +323,6 @@
 
   <main class="container">
 
-    <!-- CAKE SIZES & PRICING TABLE -->
     <h2 class="section-title">Cake Sizes & Pricing</h2>
     <div class="glass-card">
       <table class="cake-table">
@@ -347,7 +344,6 @@
       </table>
     </div>
 
-    <!-- FLOATING TREAT BUCKETS -->
     <h2 class="section-title">Treat Buckets</h2>
     <div class="bubble-grid">
       
@@ -386,7 +382,6 @@
 
     </div>
 
-    <!-- GALLERY GRID -->
     <h2 class="section-title">Custom Designs</h2>
     <div class="gallery-grid">
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-41-36.jpeg" alt="Cake"><div class="price">R650</div><button class="btn-add" onclick="addToCart('Blue/Brown Custom Cake', 650)">Add to Order</button></div>
@@ -399,7 +394,6 @@
       <div class="gallery-item"><img src="PHOTO-2026-08-15-09-37-24.jpeg" alt="Cake"><div class="price">R750</div><button class="btn-add" onclick="addToCart('Heart Custom Cake', 750)">Add to Order</button></div>
     </div>
 
-    <!-- LIVE BOOKING & SLIP CALCULATOR -->
     <div class="order-summary" id="booking-calculator">
       <h3>Booking Order Calculator</h3>
       <div id="cart-items-container">
@@ -414,9 +408,9 @@
 
   </main>
 
-  <!-- HIDDEN TEMPLATE FOR PRINTING THE BEAUTIFUL PDF SLIP -->
+  <!-- PDF SLIP TEMPLATE -->
   <div id="pdf-slip-template">
-    <div style="padding: 30px; font-family: 'Poppins', sans-serif; color: #4a3e3d; width: 100%; border: 2px solid #ff8fa3; border-radius: 15px; background-color: #fffafb;">
+    <div style="padding: 30px; border: 2px solid #ff8fa3; border-radius: 15px;">
       <div style="text-align: center; margin-bottom: 20px;">
         <h1 style="font-family: 'Great Vibes', cursive; color: #d63384; font-size: 40px; margin: 0;">Amanda Bakes</h1>
         <p style="font-style: italic; color: #888; margin-top: 0;">sweetness in every bite</p>
@@ -435,7 +429,6 @@
           </tr>
         </thead>
         <tbody id="pdf-cart-table">
-          <!-- Items will populate dynamically -->
         </tbody>
       </table>
       <hr style="border: none; border-top: 2px solid #d63384; margin: 15px 0;" />
@@ -526,23 +519,19 @@
       document.getElementById('pdf-cart-table').innerHTML = pdfTableHtml;
 
       const pdfElement = document.getElementById('pdf-slip-template');
-      pdfElement.style.display = 'block';
 
       const opt = {
-        margin:       0.5,
+        margin:       0.3,
         filename:     `AmandaBakes_Order_AB${orderNum}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
+        html2canvas:  { scale: 2, logging: false },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
       if (typeof html2pdf !== 'undefined') {
-        html2pdf().set(opt).from(pdfElement).save().then(() => {
-          pdfElement.style.display = 'none';
-        });
+        html2pdf().set(opt).from(pdfElement).save();
       } else {
         alert('PDF generator is loading. Please try again in 5 seconds.');
-        pdfElement.style.display = 'none';
       }
     }
   </script>
