@@ -409,7 +409,7 @@
         <span>Total Amount:</span>
         <span id="grand-total">R0</span>
       </div>
-      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Download PDF Slip & Send to WhatsApp</button>
+      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Download PDF Slip</button>
     </div>
 
   </main>
@@ -444,7 +444,7 @@
         <span id="pdf-slip-total">R0</span>
       </div>
       <p style="text-align: center; font-size: 11px; color: #777; margin-top: 30px;">
-        Thank you for choosing Amanda Bakes!<br>Please attach this PDF on WhatsApp to confirm your booking.
+        Thank you for choosing Amanda Bakes!<br>Save this PDF slip for your records or booking verification.
       </p>
     </div>
   </div>
@@ -526,7 +526,7 @@
       });
       document.getElementById('pdf-cart-table').innerHTML = pdfTableHtml;
 
-      // Generate PDF
+      // Generate PDF & Save directly to user device
       const pdfElement = document.getElementById('pdf-slip-template');
       pdfElement.style.display = 'block';
 
@@ -540,10 +540,6 @@
 
       html2pdf().set(opt).from(pdfElement).save().then(() => {
         pdfElement.style.display = 'none';
-
-        // Direct user to WhatsApp with instructions to attach PDF
-        let waMessage = `Hi Amanda! I have placed an order (Slip %23AB-${orderNum}).%0A%0AI have attached my downloaded PDF booking slip to this chat!`;
-        window.open(`https://wa.me/27649611004?text=${waMessage}`, '_blank');
       });
     }
   </script>
