@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Library to generate PDF dynamically -->
+  <!-- PDF Generation Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
@@ -292,7 +292,7 @@
       cursor: not-allowed;
     }
 
-    /* HIDDEN PDF TEMPLATE FOR SLIP GENERATION */
+    /* HIDDEN PDF TEMPLATE */
     #pdf-slip-template {
       display: none;
     }
@@ -510,7 +510,6 @@
       let date = new Date().toLocaleDateString();
       let orderNum = Math.floor(100000 + Math.random() * 900000);
 
-      // Populate PDF Slip Content
       document.getElementById('pdf-slip-number').innerHTML = `<strong>Slip #:</strong> AB-${orderNum}`;
       document.getElementById('pdf-slip-date').innerHTML = `<strong>Date:</strong> ${date}`;
       document.getElementById('pdf-slip-total').innerText = `R${total}`;
@@ -526,7 +525,6 @@
       });
       document.getElementById('pdf-cart-table').innerHTML = pdfTableHtml;
 
-      // Generate PDF & Save directly to user device
       const pdfElement = document.getElementById('pdf-slip-template');
       pdfElement.style.display = 'block';
 
@@ -538,9 +536,14 @@
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(pdfElement).save().then(() => {
+      if (typeof html2pdf !== 'undefined') {
+        html2pdf().set(opt).from(pdfElement).save().then(() => {
+          pdfElement.style.display = 'none';
+        });
+      } else {
+        alert('PDF generator is loading. Please try again in 5 seconds.');
         pdfElement.style.display = 'none';
-      });
+      }
     }
   </script>
 
