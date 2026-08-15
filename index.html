@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Library to generate PDF dynamically -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
     :root {
       --primary-pink: #FFD7D7;
@@ -289,6 +292,11 @@
       cursor: not-allowed;
     }
 
+    /* HIDDEN PDF TEMPLATE FOR SLIP GENERATION */
+    #pdf-slip-template {
+      display: none;
+    }
+
     footer {
       text-align: center;
       padding: 20px;
@@ -401,10 +409,45 @@
         <span>Total Amount:</span>
         <span id="grand-total">R0</span>
       </div>
-      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Download Booking Slip & Send to WhatsApp</button>
+      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Download PDF Slip & Send to WhatsApp</button>
     </div>
 
   </main>
+
+  <!-- HIDDEN TEMPLATE FOR PRINTING THE BEAUTIFUL PDF SLIP -->
+  <div id="pdf-slip-template">
+    <div style="padding: 30px; font-family: 'Poppins', sans-serif; color: #4a3e3d; width: 100%; border: 2px solid #ff8fa3; border-radius: 15px; background-color: #fffafb;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="font-family: 'Great Vibes', cursive; color: #d63384; font-size: 40px; margin: 0;">Amanda Bakes</h1>
+        <p style="font-style: italic; color: #888; margin-top: 0;">sweetness in every bite</p>
+      </div>
+      <hr style="border: none; border-top: 1px dashed #ff8fa3; margin: 15px 0;" />
+      <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 15px;">
+        <span id="pdf-slip-number"><strong>Slip #:</strong> </span>
+        <span id="pdf-slip-date"><strong>Date:</strong> </span>
+      </div>
+      <hr style="border: none; border-top: 1px dashed #ff8fa3; margin: 15px 0;" />
+      <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+          <tr style="border-bottom: 2px solid #d63384;">
+            <th style="padding: 8px 0; color: #d63384;">Item</th>
+            <th style="padding: 8px 0; text-align: right; color: #d63384;">Price</th>
+          </tr>
+        </thead>
+        <tbody id="pdf-cart-table">
+          <!-- Items will populate dynamically -->
+        </tbody>
+      </table>
+      <hr style="border: none; border-top: 2px solid #d63384; margin: 15px 0;" />
+      <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #d63384;">
+        <span>Total Amount:</span>
+        <span id="pdf-slip-total">R0</span>
+      </div>
+      <p style="text-align: center; font-size: 11px; color: #777; margin-top: 30px;">
+        Thank you for choosing Amanda Bakes!<br>Please attach this PDF on WhatsApp to confirm your booking.
+      </p>
+    </div>
+  </div>
 
   <footer>
     &copy; 2026 Amanda Bakes. All rights reserved.
@@ -467,37 +510,41 @@
       let date = new Date().toLocaleDateString();
       let orderNum = Math.floor(100000 + Math.random() * 900000);
 
-      // 1. GENERATE DOWNLOADABLE TXT SLIP
-      let slipContent = `==================================\n`;
-      slipContent += `         AMANDA BAKES          \n`;
-      slipContent += `   Sweetness in Every Bite     \n`;
-      slipContent += `==================================\n`;
-      slipContent += `Booking Slip #: AB-${orderNum}\n`;
-      slipContent += `Date: ${date}\n`;
-      slipContent += `----------------------------------\n`;
+      // Populate PDF Slip Content
+      document.getElementById('pdf-slip-number').innerHTML = `<strong>Slip #:</strong> AB-${orderNum}`;
+      document.getElementById('pdf-slip-date').innerHTML = `<strong>Date:</strong> ${date}`;
+      document.getElementById('pdf-slip-total').innerText = `R${total}`;
+
+      let pdfTableHtml = '';
       cart.forEach(item => {
-        slipContent += `${item.name.padEnd(25)} R${item.price}\n`;
+        pdfTableHtml += `
+          <tr style="border-bottom: 1px dashed #eee;">
+            <td style="padding: 8px 0;">${item.name}</td>
+            <td style="padding: 8px 0; text-align: right;">R${item.price}</td>
+          </tr>
+        `;
       });
-      slipContent += `----------------------------------\n`;
-      slipContent += `TOTAL AMOUNT:             R${total}\n`;
-      slipContent += `==================================\n`;
-      slipContent += `Please forward this order via WhatsApp\n`;
-      slipContent += `to confirm availability & payment deposit.\n`;
+      document.getElementById('pdf-cart-table').innerHTML = pdfTableHtml;
 
-      const blob = new Blob([slipContent], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `AmandaBakes_Slip_AB${orderNum}.txt`;
-      link.click();
+      // Generate PDF
+      const pdfElement = document.getElementById('pdf-slip-template');
+      pdfElement.style.display = 'block';
 
-      // 2. FORMAT WHATSAPP MESSAGE & OPEN WHATSAPP
-      let waMessage = `Hi Amanda! I would like to place a booking order (Slip %23AB-${orderNum}):%0A%0A`;
-      cart.forEach(item => {
-        waMessage += `%E2%80%A2 ${encodeURIComponent(item.name)}: R${item.price}%0A`;
+      const opt = {
+        margin:       0.5,
+        filename:     `AmandaBakes_Order_AB${orderNum}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(pdfElement).save().then(() => {
+        pdfElement.style.display = 'none';
+
+        // Direct user to WhatsApp with instructions to attach PDF
+        let waMessage = `Hi Amanda! I have placed an order (Slip %23AB-${orderNum}).%0A%0AI have attached my downloaded PDF booking slip to this chat!`;
+        window.open(`https://wa.me/27649611004?text=${waMessage}`, '_blank');
       });
-      waMessage += `%0A*Total Amount: R${total}*`;
-
-      window.open(`https://wa.me/27649611004?text=${waMessage}`, '_blank');
     }
   </script>
 
