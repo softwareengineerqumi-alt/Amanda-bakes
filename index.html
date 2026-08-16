@@ -10,9 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- PDF Generation Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
   <style>
     :root {
       --primary-pink: #FFD7D7;
@@ -287,13 +284,27 @@
       cursor: not-allowed;
     }
 
-    /* OFF-SCREEN TEMPLATE FIX FOR SAFARI/CHROME PDF CAPTURE */
     #pdf-slip-template {
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
-      width: 600px;
-      background-color: #fffafb;
+      display: none;
+    }
+
+    /* PRINT STYLES: Hides the site and only prints the receipt slip */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #pdf-slip-template, #pdf-slip-template * {
+        visibility: visible;
+      }
+      #pdf-slip-template {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 20px;
+      }
     }
 
     footer {
@@ -403,16 +414,16 @@
         <span>Total Amount:</span>
         <span id="grand-total">R0</span>
       </div>
-      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Download PDF Slip</button>
+      <button class="action-btn" id="submit-btn" disabled onclick="processOrderAndDownload()">Save / Download PDF Slip</button>
     </div>
 
   </main>
 
-  <!-- PDF SLIP TEMPLATE -->
+  <!-- PRINT SLIP TEMPLATE -->
   <div id="pdf-slip-template">
-    <div style="padding: 30px; border: 2px solid #ff8fa3; border-radius: 15px;">
+    <div style="padding: 20px; border: 2px solid #ff8fa3; border-radius: 15px; font-family: 'Poppins', sans-serif;">
       <div style="text-align: center; margin-bottom: 20px;">
-        <h1 style="font-family: 'Great Vibes', cursive; color: #d63384; font-size: 40px; margin: 0;">Amanda Bakes</h1>
+        <h1 style="font-family: 'Great Vibes', cursive; color: #d63384; font-size: 36px; margin: 0;">Amanda Bakes</h1>
         <p style="font-style: italic; color: #888; margin-top: 0;">sweetness in every bite</p>
       </div>
       <hr style="border: none; border-top: 1px dashed #ff8fa3; margin: 15px 0;" />
@@ -437,7 +448,7 @@
         <span id="pdf-slip-total">R0</span>
       </div>
       <p style="text-align: center; font-size: 11px; color: #777; margin-top: 30px;">
-        Thank you for choosing Amanda Bakes!<br>Save this PDF slip for your records or booking verification.
+        Thank you for choosing Amanda Bakes!<br>Save this receipt slip for your records or booking verification.
       </p>
     </div>
   </div>
@@ -518,21 +529,8 @@
       });
       document.getElementById('pdf-cart-table').innerHTML = pdfTableHtml;
 
-      const pdfElement = document.getElementById('pdf-slip-template');
-
-      const opt = {
-        margin:       0.3,
-        filename:     `AmandaBakes_Order_AB${orderNum}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, logging: false },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      if (typeof html2pdf !== 'undefined') {
-        html2pdf().set(opt).from(pdfElement).save();
-      } else {
-        alert('PDF generator is loading. Please try again in 5 seconds.');
-      }
+      // Triggers native browser print preview (allows direct "Save as PDF" on mobile)
+      window.print();
     }
   </script>
 
